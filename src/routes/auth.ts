@@ -6,12 +6,34 @@ const register = async (req: Request, res: Response) => {
   const {email, username, password} = req.body;
 
   try {
+    //list of errors
+    let errorObj: any = {};
+
+    //fetch to see if email/username already exist
+    const emailUser = await User.findOne({email});
+    const usernameUser = await User.findOne({username});
+
+    if (emailUser) {
+      errorObj.email = 'Email already in use';
+    }
+    if (usernameUser) {
+      errorObj.username = 'Username already in use';
+    }
+
+    if(Object.keys(errorObj).length > 0) {
+      return res.status(400).send(errorObj);
+    }
+    
+    //Create new user
     const user = new User({email, username, password});
 
-    // Validate the user
-    const errors = await validate(user);
-    if (errors.length > 0) return res.status(400).send({errors});
+    // More validation
+    errorObj = await validate(user);
+    if (errorObj.length > 0) {
+      return res.status(400).send({errorObj});
+    }
 
+    //Save user to db
     await user.save();
     return res.json(user);
   } catch (error) {
