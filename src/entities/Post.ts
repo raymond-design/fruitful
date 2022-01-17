@@ -1,6 +1,7 @@
 import {Entity as TypeEntity, Column, Index, BeforeInsert, ManyToOne, JoinColumn} from "typeorm";
 import { Exclude } from 'class-transformer';
 
+import Group from "./Group";
 import { makeId, slugify } from "../util/helpers";
 import Entity from './Entity';
 import User from './User';
@@ -26,12 +27,13 @@ export default class Post extends Entity{
     @Column({ nullable: true, type: 'text'})
     body: string
 
-    @Column()
-    group: string
-
     @ManyToOne(() => User, user => user.posts)
     @JoinColumn({ name: 'username', referencedColumnName: 'username' })
     user: User;
+
+    @ManyToOne(() => Group, group => group.posts)
+    @JoinColumn({ name: 'groupName', referencedColumnName: 'name' })
+    group: Group
 
     @BeforeInsert()
     makeIdAndSlug(){
