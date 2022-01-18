@@ -7,7 +7,7 @@ import {isEmpty} from 'class-validator';
 import { Subject } from "typeorm/persistence/Subject";
 
 const createGroup = async (req: Request, res: Response) => {
-  const {name, title, description } = req.body;
+  const { name, title, description } = req.body;
 
   const user: User = res.locals.user;
 
@@ -25,7 +25,7 @@ const createGroup = async (req: Request, res: Response) => {
     //typeorm-specific query to check if group name exists (case-insensitive)
     const group = await getRepository(Group)
       .createQueryBuilder('group')
-      .where('lower(group.name) - :name', { name: name.toLowercase() })
+      .where('lower(group.name) = :name', { name: name.toLowerCase() })
       .getOne();
 
     if(group) {
@@ -37,6 +37,7 @@ const createGroup = async (req: Request, res: Response) => {
     }
 
   } catch (error) {
+    console.log(error);
     return res.status(400).json(error);
   }
 
@@ -48,7 +49,6 @@ const createGroup = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Something went wrong' });
-    
   }
 
 }
