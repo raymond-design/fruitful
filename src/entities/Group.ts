@@ -1,7 +1,5 @@
-import {Entity as TypeEntity, Column, Index, BeforeInsert, ManyToOne, JoinColumn, OneToMany} from "typeorm";
-import { Exclude } from 'class-transformer';
+import {Entity as TypeEntity, Column, Index, ManyToOne, JoinColumn, OneToMany} from "typeorm";
 
-import { makeId, slugify } from "../util/helpers";
 import Entity from './Entity';
 import User from './User';
 import Post from "./Post";

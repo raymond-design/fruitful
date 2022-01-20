@@ -3,8 +3,7 @@ import User from "../entities/User";
 import Group from "../entities/Group";
 import auth from '../middleware/auth';
 import { getRepository } from "typeorm";
-import {isEmpty} from 'class-validator';
-import { Subject } from "typeorm/persistence/Subject";
+import { isEmpty } from 'class-validator';
 
 const createGroup = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;

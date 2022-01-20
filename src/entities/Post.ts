@@ -1,10 +1,10 @@
-import {Entity as TypeEntity, Column, Index, BeforeInsert, ManyToOne, JoinColumn} from "typeorm";
-import { Exclude } from 'class-transformer';
+import {Entity as TypeEntity, Column, Index, BeforeInsert, ManyToOne, JoinColumn, OneToMany} from "typeorm";
 
 import Group from "./Group";
 import { makeId, slugify } from "../util/helpers";
 import Entity from './Entity';
 import User from './User';
+import Comment from "./Comment";
 
 @TypeEntity('posts')
 export default class Post extends Entity{
@@ -34,6 +34,9 @@ export default class Post extends Entity{
     @ManyToOne(() => Group, group => group.posts)
     @JoinColumn({ name: 'groupName', referencedColumnName: 'name' })
     group: Group
+
+    @OneToMany(() => Comment, comment => comment.post)
+    comments: Comment[]
 
     @BeforeInsert()
     makeIdAndSlug(){

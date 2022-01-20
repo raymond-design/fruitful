@@ -82,7 +82,7 @@ const login = async (req: Request, res: Response) => {
 
     //Create jwt
     //Note: change signature string to more secure, random string later on
-    const token = jwt.sign({ username }, process.env.JWT_SECRET);
+    const token = jwt.sign({ username }, process.env.JWT_SECRET!);
 
     //Set secure to true later on
     res.set('Set-Cookie', cookie.serialize('token', token, {
@@ -96,7 +96,8 @@ const login = async (req: Request, res: Response) => {
     return res.json(user);
 
   } catch (error) {
-    
+    console.log(error);
+    return res.json({ error: 'Something went wrong!'});
   }
 }
 
@@ -104,7 +105,7 @@ const me = (_: Request, res: Response) => {
   return res.json(res.locals.user);
 }
 
-const logout = (req: Request, res: Response) => {
+const logout = (_: Request, res: Response) => {
   res.set('Set-Cookie', cookie.serialize('token', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
