@@ -6,7 +6,11 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      spacing: {
+        70: '17.5rem',
+      }
+    },
   },
   plugins: [],
 }
