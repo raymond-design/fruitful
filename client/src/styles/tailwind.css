@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .button {
+    @apply inline-block text-xs font-bold text-center uppercase border;
+  }
+  .button.blue {
+    @apply text-white bg-gray-300 border-gray-300;
+  }
+  .button.blue.hollow {
+    @apply text-gray-400 bg-transparent border-gray-400;
+  }
+}
