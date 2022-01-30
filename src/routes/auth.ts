@@ -7,6 +7,13 @@ import cookie from 'cookie';
 import User from '../entities/User';
 import auth from '../middleware/auth';
 
+const mapErrors = (errors: Object[]) => {
+  
+  return errors.reduce((prev: any, err: any) => {
+    prev[err.property] = Object.entries(err.constraints)[0][1]
+    return prev
+  }, {})
+}
 const register = async (req: Request, res: Response) => {
   const {email, username, password} = req.body;
 
@@ -34,8 +41,9 @@ const register = async (req: Request, res: Response) => {
 
     // More validation
     errorObj = await validate(user);
+
     if (errorObj.length > 0) {
-      return res.status(400).send({errorObj});
+      return res.status(400).send(mapErrors(errorObj));
     }
 
     //Save user to db
