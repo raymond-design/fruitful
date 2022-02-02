@@ -1,15 +1,15 @@
 import Head from 'next/head'
 import Link from 'next/link'
-
 import { Fragment, useState, useEffect } from 'react'
-import styles from '../styles/Home.module.css'
-
-import { Post } from '../types'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-
 import Axios from 'axios';
+
+import styles from '../styles/Home.module.css'
+import { Post } from '../types'
+
+dayjs.extend(relativeTime);
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -44,21 +44,25 @@ export default function Home() {
                   <Link href={`/group/${post.group}`}>
                     <Fragment>
                       <img src="http://www.gravatar.com/avatar" className="w-6 h-6 mr-1 rounded-full cursor-pointer" />
-                      <a className="text-cs font-bold hover:underline">
+                      <a className="font-bold text-cs hover:underline">
                       /group/{post.group}
                       </a>
                     </Fragment>
                   </Link>
-                  <p className="text-xs text-gray-600">
-                    <span className="mx-1">-</span>
-                    Posted by
-                    <Link href={`/u/user`}>
-                      <a className="mx-1 hover:underline">
-                        /u/user
-                      </a>
-                    </Link>
-                  </p>
+                  <p className="text-xs text-gray-500">
+            Posted by
+            <Link href={`/${post.username}`}>
+              <a className="mx-1 hover:underline">/{post.username}</a>
+            </Link>
+            <Link href={post.url}>
+              <a className="mx-1 hover:underline">
+                {dayjs(post.createdAt).fromNow()}
+              </a>
+            </Link>
+          </p>
                 </div>
+                <Link href={post.url}><a className="my-1 text-lg font-medium">{post.title}</a></Link>
+                {post.body && <p className="my-1 text-sm">{post.body}</p>}
               </div>
             </div>
           ))}
