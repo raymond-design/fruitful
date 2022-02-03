@@ -1,10 +1,11 @@
 import Entity from './Entity';
 
-import { BeforeInsert, Column, Entity as TypeEntity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity as TypeEntity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import User from './User';
 import Post from './Post';
 
 import { makeId } from '../util/helpers';
+import Vote from './Vote';
 
 @TypeEntity('comments')
 export default class Comment extends Entity {
@@ -29,6 +30,9 @@ export default class Comment extends Entity {
 
   @ManyToOne(() => Post, post => post.comments, { nullable: false })
   post: Post
+
+  @OneToMany(() => Vote, vote => vote.comment )
+  votes: Vote[]
 
   @BeforeInsert()
   makeIdAndSlug() {
