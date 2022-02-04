@@ -1,11 +1,11 @@
-import { Request, Router } from 'express'
+import { Request, Response, Router } from 'express'
+
 import Post from '../entities/Post';
 import User from '../entities/User'
 import Vote from '../entities/Vote';
 import Comment from '../entities/Comment';
 
 import auth from '../middleware/auth'
-import { ConnectionNotFoundError } from 'typeorm';
 
 const vote = async (req: Request, res: Response) => {
   const {identifier, slug, commentIdentifier, value} = req.body;
@@ -27,44 +27,41 @@ const vote = async (req: Request, res: Response) => {
     let vote: Vote | undefined;
     let comment: Comment | undefined;
 
-    if(commentIdentifier){
-      //if exists, find vote using comment
+    if (commentIdentifier) {
+      // find by identifier
       comment = await Comment.findOneOrFail({ identifier: commentIdentifier });
       vote = await Vote.findOne({ user, comment });
     } else {
+      // find by post
       vote = await Vote.findOne({ user, post });
     }
 
-    if(!vote && value == 0){
-      // no vote and value = 0 (error)
-      return res.status(404).json({ error: 'Vote not found '});
-    } else if(!vote){
-      //create vote
+    if (!vote && value === 0) {
+      // if no vote and value = 0 return error
+      return res.status(404).json({ error: 'Vote not found' });
+    } else if (!vote) {
+      // If no vote, create it
       vote = new Vote({ user, value });
 
-      if(comment) {
-        vote.comment = comment;
-      }
-      else {
-        vote.post = post;
-      }
+      if (comment) vote.comment = comment;
+      else vote.post = post;
 
       await vote.save();
-    } else if(value === 0) {
-      //If vote and value = 0, then remove vote
+    } else if (value === 0) {
+      // If vote exists and value === 0, then removw
       await vote.remove();
-    } else if(vote.value !== value) {
-      //If vote, update vote
+    } else if (vote.value !== value) {
       vote.value = value;
+
       await vote.save();
     }
 
-    post = await Post.findOneOrFail({ identifier, slug }, { relations: ['comments', 'group', 'votes']});
+    post = await Post.findOneOrFail( { identifier, slug }, { relations: ['comments', 'group', 'votes'] } );
 
-    return res.json(post);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal Server Error!'});
+    return res.json(post)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ error: 'Internal server error' })
   }
 }
 const router = Router();
