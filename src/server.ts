@@ -12,6 +12,7 @@ import authRoutes from './routes/auth';
 import postRoutes from './routes/posts';
 import groupRoutes from './routes/groups';
 import commentRoutes from './routes/comments';
+import otherRoutes from './routes/other';
 
 import trim from './middleware/trim';
 
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/other', otherRoutes);
 
 app.listen(PORT, async () => {
     console.log(`Server started on http://localhost:${PORT}`);
