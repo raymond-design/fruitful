@@ -56,8 +56,9 @@ const vote = async (req: Request, res: Response) => {
       await vote.save();
     }
 
-    post = await Post.findOneOrFail( { identifier, slug }, { relations: ['comments', 'group', 'votes'] } );
-
+    post = await Post.findOneOrFail( { identifier, slug }, { relations: ['comments', 'comments.votes', 'group', 'votes'] } );
+    post.setUserVote(user);
+    post.comments.forEach(c => c.setUserVote(user))
     return res.json(post)
   } catch (err) {
     console.log(err)
