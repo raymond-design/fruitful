@@ -9,7 +9,7 @@ import Axios from 'axios';
 import styles from '../styles/Home.module.css'
 import { Post } from '../types'
 
-import { Post as PostCard } from '../components/Post'
+import PostCard from '../components/PostCard'
 import { GetServerSideProps } from 'next'
 
 dayjs.extend(relativeTime);

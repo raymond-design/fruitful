@@ -5,7 +5,7 @@ import { makeId, slugify } from "../util/helpers";
 import Entity from './Entity';
 import User from './User';
 import Comment from "./Comment";
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 import Vote from "./Vote";
 
 @TypeEntity('posts')
@@ -40,9 +40,11 @@ export default class Post extends Entity{
     @JoinColumn({ name: 'groupName', referencedColumnName: 'name' })
     group: Group
 
+    @Exclude()
     @OneToMany(() => Comment, comment => comment.post)
     comments: Comment[]
 
+    @Exclude()
     @OneToMany(() => Vote, vote => vote.post)
     votes: Vote[]
 
