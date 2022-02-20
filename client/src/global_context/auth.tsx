@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 import { User } from '../types';
 
@@ -36,3 +36,21 @@ const reducer = (state: State, {type, payload}: Action) => {
       throw new Error(`Action unknown ${type}`)
   }
 }
+
+export const AuthProvide = ({ children }: { children: React.ReactNode }) => {
+  const [state, dispatch] = useReducer(reducer, {
+    user: null,
+    auth: false
+  })
+
+  return (
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>
+        {children}
+      </StateContext.Provider>
+    </DispatchContext.Provider>
+  )
+}
+
+export const useAuthState = () => useContext(StateContext);
+export const useAuthDispatch = () => useContext(DispatchContext);

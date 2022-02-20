@@ -1,8 +1,22 @@
 import Link from 'next/link'
 import Logo from '../images/logo.svg'
+import { Fragment } from 'react'
+import Axios from 'axios';
+import { useAuthDispatch, useAuthState } from '../global_context/auth';
 
-const nav: React.FC = () => (
-  <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-center h-12 px-5 bg-white">
+const nav: React.FC = () => {
+  const { auth } = useAuthState();
+  const dispatch = useAuthDispatch();
+  
+  const logout = () => {
+    Axios.get('/auth/logout')
+      .then(() => {
+        dispatch({ type: 'LOGOUT' })
+        window.location.reload()
+      })
+      .catch(err => console.log(err))
+  }
+  return <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-center h-12 px-5 bg-white">
         <div className="flex items-center">
           <Link href="/">
             <a>
@@ -20,18 +34,27 @@ const nav: React.FC = () => (
         </div>
 
         <div className="flex">
-          <Link href="/login">
-            <a className="w-32 py-1 mr-5 hollow blue button ">
-              Log In
-            </a>
-          </Link>
-          <Link href="/register">
-            <a className="w-32 py-1 blue button ">
-              Sign Up
-            </a>
-          </Link>
+          {auth ? (
+            //Logged In
+            <button className="w-32 py-1 mr-5 hollow blue button " onClick={logout}>
+              Log Out
+            </button>
+          ) : (
+            <Fragment>
+              <Link href="/login">
+                <a className="w-32 py-1 mr-5 hollow blue button ">
+                  Log In
+                </a>
+              </Link>
+              <Link href="/register">
+                <a className="w-32 py-1 blue button ">
+                Sign Up
+                </a>
+            </Link>
+          </Fragment>
+          )}
         </div>
       </div>
-)
+}
 
 export default nav;
