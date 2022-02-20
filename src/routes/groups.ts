@@ -1,9 +1,12 @@
 import { Request, Response, Router } from "express";
-import User from "../entities/User";
-import Group from "../entities/Group";
-import auth from '../middleware/auth';
 import { getRepository } from "typeorm";
 import { isEmpty } from 'class-validator';
+
+import User from "../entities/User";
+import Group from "../entities/Group";
+
+import auth from '../middleware/auth';
+import status from '../middleware/status';
 
 const createGroup = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;
@@ -54,6 +57,6 @@ const createGroup = async (req: Request, res: Response) => {
 
 const router = Router();
 
-router.post('/', auth, createGroup);
+router.post('/', status, auth, createGroup);
 
 export default router;

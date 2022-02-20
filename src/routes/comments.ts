@@ -2,7 +2,9 @@ import { Request, Response, Router } from "express";
 import Comment from "../entities/Comment";
 
 import Post from "../entities/Post";
+
 import auth from '../middleware/auth';
+import status from '../middleware/status';
 
 const addComment = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params;
@@ -30,6 +32,6 @@ const addComment = async (req: Request, res: Response) => {
 
 const router = Router();
 
-router.post('/:identifier/:slug/comments', auth, addComment);
+router.post('/:identifier/:slug/comments', status, auth, addComment);
 
 export default router;

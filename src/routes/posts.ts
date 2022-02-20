@@ -3,6 +3,7 @@ import Group from "../entities/Group";
 
 import Post from "../entities/Post";
 import auth from '../middleware/auth';
+import status from '../middleware/status';
 
 const createPost = async (req: Request, res: Response) => {
   const { title, body, group } = req.body;
@@ -38,6 +39,10 @@ const getPosts = async (_: Request, res: Response) => {
       //relations: ['comments', 'votes', 'group'],
     });
 
+    if(res.locals.user) {
+      posts.forEach((post) => post.setUserVote(res.locals.user));
+    }
+    
     return res.json(posts);
   } catch (error) {
     console.log(error);
@@ -65,8 +70,8 @@ const getPost = async (req: Request, res: Response) => {
 
 const router = Router();
 
-router.post('/', auth, createPost);
-router.get('/', getPosts);
+router.post('/', status, auth, createPost);
+router.get('/', status, getPosts);
 router.get('/:identifier/:slug', getPost);
 
 export default router;

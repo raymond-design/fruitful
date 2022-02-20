@@ -6,6 +6,7 @@ import cookie from 'cookie';
 
 import User from '../entities/User';
 import auth from '../middleware/auth';
+import status from '../middleware/status';
 
 const mapErrors = (errors: Object[]) => {
   
@@ -129,7 +130,7 @@ const router = Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/me', auth, me);
-router.get('/logout', auth, logout);
+router.get('/me', status, auth, me);
+router.get('/logout', status, auth, logout);
 
 export default router;
