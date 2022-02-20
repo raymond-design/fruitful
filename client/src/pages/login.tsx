@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import Axios, {AxiosError} from 'axios';
 import { useRouter } from 'next/router';
 
-import { useAuthDispatch } from '../global_context/auth';
+import { useAuthDispatch, useAuthState } from '../global_context/auth';
 
 import InputGroup from '../components/inputGroup';
 
@@ -14,8 +14,14 @@ export default function Register() {
   const [errors, setErrors] = useState<any>({});
 
   const dispatch = useAuthDispatch();
+  const { auth } = useAuthState();
   
   const router = useRouter();
+  
+  //re-route to home page if already logged in:
+  if(auth) {
+    router.push('/');
+  }
   
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
@@ -26,7 +32,7 @@ export default function Register() {
         password,
       });
 
-      dispatch({ type: 'LOGIN', payload: res.data});
+      dispatch('LOGIN', res.data);
       
       router.push('/');
 

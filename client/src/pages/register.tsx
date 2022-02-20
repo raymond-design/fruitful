@@ -4,6 +4,8 @@ import { FormEvent, useState } from 'react';
 import Axios, {AxiosError} from 'axios';
 import { useRouter } from 'next/router';
 
+import { useAuthState } from '../global_context/auth';
+
 import InputGroup from '../components/inputGroup';
 
 export default function Register() {
@@ -13,7 +15,14 @@ export default function Register() {
   const [agreement, setAgreement] = useState(false);
   const [errors, setErrors] = useState<any>({});
 
+  const { auth } = useAuthState();
+
   const router = useRouter();
+  
+  //re-route to home page if already logged in:
+  if(auth) {
+    router.push('/');
+  }
   
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();

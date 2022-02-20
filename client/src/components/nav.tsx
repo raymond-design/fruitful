@@ -5,13 +5,13 @@ import Axios from 'axios';
 import { useAuthDispatch, useAuthState } from '../global_context/auth';
 
 const nav: React.FC = () => {
-  const { auth } = useAuthState();
+  const { auth, loading } = useAuthState();
   const dispatch = useAuthDispatch();
   
   const logout = () => {
     Axios.get('/auth/logout')
       .then(() => {
-        dispatch({ type: 'LOGOUT' })
+        dispatch('LOGOUT')
         window.location.reload()
       })
       .catch(err => console.log(err))
@@ -34,7 +34,8 @@ const nav: React.FC = () => {
         </div>
 
         <div className="flex">
-          {auth ? (
+          {!loading &&
+          (auth ? (
             //Logged In
             <button className="w-32 py-1 mr-5 hollow blue button " onClick={logout}>
               Log Out
@@ -52,7 +53,7 @@ const nav: React.FC = () => {
                 </a>
             </Link>
           </Fragment>
-          )}
+          ))}
         </div>
       </div>
 }
