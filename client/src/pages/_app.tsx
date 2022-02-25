@@ -20,7 +20,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig
       value={{
-        fetcher: (url) => Axios.get(url)
+        fetcher: (url) => Axios.get(url).then(res => res.data),
       }}
     >
       <AuthProvide>

@@ -16,13 +16,7 @@ import { GetServerSideProps } from 'next'
 dayjs.extend(relativeTime);
  
 export default function Home() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  
-  useEffect(() => {
-    Axios.get('/posts')
-    .then(res => setPosts(res.data))
-    .catch(err => console.log(err))
-  }, []) 
+  const {data: posts} = useSWR('/posts')
   
   return (
     <div className="pt-12">
@@ -36,7 +30,7 @@ export default function Home() {
         
         <div className="w-160">
           {/**Looping thru Post Components here: */}
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <PostCard post={post} key={post.identifier} />
           ))}
         </div>

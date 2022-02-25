@@ -63,12 +63,8 @@ export default function PostCard({post: {
               <div className="w-full p-2">
                 <div className="flex items-center">
                   <Link href={`/group/${group}`}>
-                    <Fragment>
                       <img src="http://www.gravatar.com/avatar" className="w-6 h-6 mr-1 rounded-full cursor-pointer" />
-                      <a className="font-bold text-cs hover:underline">
-                        Group: {group}
-                      </a>
-                    </Fragment>
+                    
                   </Link>
                   <p className="text-xs text-gray-500">
             Posted by
