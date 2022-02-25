@@ -84,7 +84,7 @@ const getGroup = async(req: Request, res: Response) => {
 const upload = multer({
   storage: multer.diskStorage({
     destination: 'public/images',
-    filename: (req, file, cb) => {
+    filename: (_, file, cb) => {
       const name = makeId(15);
       cb(null, name + path.extname(file.originalname));
     }
@@ -94,12 +94,12 @@ const upload = multer({
       cb(null, true);
     }
     else {
-      cb(null, false);
+      cb(new Error('Invalid file type'));
     }
   }
 });
 
-const uploadGroupImage = async (req: Request, res: Response) => {
+const uploadGroupImage = async (_: Request, res: Response) => {
   return res.json({ success: true });
 }
 
