@@ -2,6 +2,9 @@ import { Request, Response, Router, NextFunction } from "express";
 import { getRepository } from "typeorm";
 import { isEmpty } from 'class-validator';
 import multer, { FileFilterCallback } from "multer";
+import path from "path";
+import fs from 'fs';
+
 import User from "../entities/User";
 import Group from "../entities/Group";
 
@@ -9,7 +12,6 @@ import auth from '../middleware/auth';
 import status from '../middleware/status';
 import Post from "../entities/Post";
 import { makeId } from "../util/helpers";
-import path from "path/posix";
 
 const createGroup = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;
@@ -121,13 +123,43 @@ const upload = multer({
   }
 });
 
-const uploadGroupImage = async (_: Request, res: Response) => {
-  return res.json({ success: true });
+const uploadGroupImage = async (req: Request, res: Response) => {
+  const group: Group = res.locals.group;
+
+  try {
+    const type = req.body.type;
+
+    //no file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file was uploaded' });
+    }
+
+    //check if file is an image
+    if(type !== 'image' && type !== 'banner') {
+      fs.unlinkSync(req.file.path);
+
+      return res.status(400).json({ error: 'Invalid type' });
+    }
+
+    if(type === 'image') {
+      group.imageUrn = req.file.filename;
+    }
+    else if (type === 'banner') {
+      group.bannerUrn = req.file.filename;
+    }
+
+    await group.save();
+
+    return res.json(group);
+  } catch (error) {
+    return res.status(500).json({ error: 'Something went wrong' });
+  }
 }
 
 const router = Router();
 
 router.post('/', status, auth, createGroup);
-router.get('/:name', status, getGroup)
+router.get('/:name', status, getGroup);
 router.post('/:name/image', status, auth, owner, upload.single('file'), uploadGroupImage)
+
 export default router;
