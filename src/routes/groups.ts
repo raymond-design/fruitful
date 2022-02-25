@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import { getRepository } from "typeorm";
 import { isEmpty } from 'class-validator';
 import multer, { FileFilterCallback } from "multer";
@@ -81,6 +81,28 @@ const getGroup = async(req: Request, res: Response) => {
   }
 }
 
+/**
+ * 
+ * Middleware to check if the user owns the group
+ */
+const owner = async (req: Request, res: Response, next: NextFunction) => {
+  const user: User = res.locals.user;
+
+  try {
+    const group = await Group.findOneOrFail({ where: { name: req.params.name } });
+    if(group.username !== user.username) {
+      //Unauthorized, not owner
+      return res.status(403).json({ error: 'You are not the owner of this group!' });
+    }
+
+    res.locals.group = group;
+    return next();
+
+  } catch (error) {
+    return res.status(500).json({ error: 'Something went wrong' });
+  }
+}
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: 'public/images',
@@ -107,5 +129,5 @@ const router = Router();
 
 router.post('/', status, auth, createGroup);
 router.get('/:name', status, getGroup)
-router.post('/:name/image', status, auth, upload.single('file'), uploadGroupImage)
+router.post('/:name/image', status, auth, owner, upload.single('file'), uploadGroupImage)
 export default router;
