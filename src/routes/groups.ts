@@ -7,6 +7,7 @@ import Group from "../entities/Group";
 
 import auth from '../middleware/auth';
 import status from '../middleware/status';
+import Post from "../entities/Post";
 
 const createGroup = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;
@@ -55,8 +56,31 @@ const createGroup = async (req: Request, res: Response) => {
 
 }
 
+const getGroup = async(req: Request, res: Response) => {
+  const name = req.params.name;
+
+  try {
+    const group = await Group.findOneOrFail({ name });
+    const posts = await Post.find({
+      where: { group },
+      order: { createdAt : 'DESC'},
+      relations: ["comments", "votes"],
+    });
+    
+    group.posts = posts;
+
+    if(res.locals.user) {
+      (await group).posts.forEach(p => p.setUserVote(res.locals.user))
+    }
+    return res.json(group)
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Something\'s wrong!"})
+  }
+}
 const router = Router();
 
 router.post('/', status, auth, createGroup);
+router.get('/:name', status, getGroup)
 
 export default router;
