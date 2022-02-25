@@ -75,7 +75,7 @@ const getGroup = async(req: Request, res: Response) => {
     return res.json(group)
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: "Something\'s wrong!"})
+    return res.status(404).json({ group: 'Group doesn\'t exist!'})
   }
 }
 const router = Router();
