@@ -1,13 +1,15 @@
 import { Request, Response, Router } from "express";
 import { getRepository } from "typeorm";
 import { isEmpty } from 'class-validator';
-
+import multer, { FileFilterCallback } from "multer";
 import User from "../entities/User";
 import Group from "../entities/Group";
 
 import auth from '../middleware/auth';
 import status from '../middleware/status';
 import Post from "../entities/Post";
+import { makeId } from "../util/helpers";
+import path from "path/posix";
 
 const createGroup = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;
@@ -78,9 +80,32 @@ const getGroup = async(req: Request, res: Response) => {
     return res.status(404).json({ group: 'Group doesn\'t exist!'})
   }
 }
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: 'public/images',
+    filename: (req, file, cb) => {
+      const name = makeId(15);
+      cb(null, name + path.extname(file.originalname));
+    }
+  }),
+  fileFilter: (_, file: any, cb: FileFilterCallback) => {
+    if(file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg') {
+      cb(null, true);
+    }
+    else {
+      cb(null, false);
+    }
+  }
+});
+
+const uploadGroupImage = async (req: Request, res: Response) => {
+  return res.json({ success: true });
+}
+
 const router = Router();
 
 router.post('/', status, auth, createGroup);
 router.get('/:name', status, getGroup)
-
+router.post('/:name/image', status, auth, upload.single('file'), uploadGroupImage)
 export default router;
