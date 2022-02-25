@@ -5,6 +5,7 @@ import { Fragment, useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Axios from 'axios';
+import useSWR from 'swr';
 
 import styles from '../styles/Home.module.css'
 import { Post } from '../types'
@@ -13,7 +14,7 @@ import PostCard from '../components/PostCard'
 import { GetServerSideProps } from 'next'
 
 dayjs.extend(relativeTime);
-
+ 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   
