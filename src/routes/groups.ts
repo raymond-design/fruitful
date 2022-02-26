@@ -141,14 +141,21 @@ const uploadGroupImage = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid type' });
     }
 
+    let old: string = '';
     if(type === 'image') {
+      old = group.imageUrn || '';
       group.imageUrn = req.file.filename;
     }
     else if (type === 'banner') {
+      old = group.bannerUrn || '';
       group.bannerUrn = req.file.filename;
     }
 
     await group.save();
+
+    if(old !== '') {
+      fs.unlinkSync(`public\\images\\${old}`);
+    }
 
     return res.json(group);
   } catch (error) {
