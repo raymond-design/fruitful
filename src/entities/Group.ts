@@ -3,6 +3,7 @@ import {Entity as TypeEntity, Column, Index, ManyToOne, JoinColumn, OneToMany} f
 import Entity from './Entity';
 import User from './User';
 import Post from "./Post";
+import { Expose } from "class-transformer";
 
 @TypeEntity('groups')
 export default class Group extends Entity{
@@ -36,4 +37,14 @@ export default class Group extends Entity{
 
     @OneToMany(() => Post, post => post.group)
     posts: Post[]
+
+    @Expose()
+    get imageUrl(): string {
+        return this.imageUrn ? `${process.env.APP_URL}/images/${this.imageUrn}` : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=https%3A%2F%2Fexample.com%2Fimages%2Favatar.jpg';
+    }
+
+    @Expose()
+    get bannerUrl(): string | undefined {
+        return this.bannerUrn ? `${process.env.APP_URL}/images/${this.bannerUrn}` : undefined;
+    }
 }
