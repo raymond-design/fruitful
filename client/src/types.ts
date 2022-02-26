@@ -21,3 +21,17 @@ export interface User {
   createdAt: String
   updatedAt: String
 }
+
+export interface Group {
+  createdAt: String
+  updatedAt: String
+  name: String
+  title: String
+  description: String
+  imageUrn: String
+  bannerUrn: String
+  username: String
+  posts: Post[]
+  imageUrl: String
+  bannerUrl: String
+}
