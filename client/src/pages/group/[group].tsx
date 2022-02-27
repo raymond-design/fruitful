@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import classNames from "classnames";
 import useSWR from "swr";
+import Axios from "axios";
 
 import PostCard from "../../components/PostCard";
 
@@ -23,7 +24,7 @@ export default function GroupPage() {
   
   const groupName = router.query.group;
 
-  const { data: group, error } = useSWR<Group>(groupName ? `groups/${groupName}` : null)
+  const { data: group, error, revalidate  } = useSWR<Group>(groupName ? `/groups/${groupName}` : null)
 
   useEffect(() => {
     if(!group) {
@@ -35,7 +36,28 @@ export default function GroupPage() {
     if(!owner) 
       return fileInputRef.current.name = type;
       fileInputRef.current.click();
-    
+  }
+
+  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    const formData = new FormData();
+
+    formData.append('file', file);
+    formData.append('type', fileInputRef.current.name);
+
+    try {
+      const res = await Axios.post<Group>('/groups/${group.name}/image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      revalidate();
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (error) {
@@ -60,7 +82,7 @@ export default function GroupPage() {
       </Head>
         {group && (
           <Fragment>
-            <input type="file" hidden={true} ref={fileInputRef} />
+            <input type="file" hidden={true} ref={fileInputRef} onChange={uploadImage} />
             
             <div>
               <div 
