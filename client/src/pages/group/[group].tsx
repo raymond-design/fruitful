@@ -4,10 +4,11 @@ import { Head } from "next/document";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
 import { Fragment } from "react";
+import Image from 'next/image';
 
 import { Group } from '../../types';
 
-export default function Group() {
+export default function GroupPage() {
   const router = useRouter();
 
   const groupName = router.query.group;
@@ -46,7 +47,17 @@ export default function Group() {
                 ) : (
                   <div className="h-20 bg-blue-500"></div>
                 )}
-                  
+              </div>
+              <div className="h-20 bg-white">
+                <div className="container flex">
+                  <Image 
+                    src={group.imageUrl}
+                    alt="Group"
+                    width={100}
+                    height={100}
+                    className="rounded-full"
+                  />
+                </div>
               </div>
             </div>
             <div className="container flex pt-5">
