@@ -1,24 +1,49 @@
+import { createRef, Fragment, useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
 import { Head } from "next/document";
-
-import useSWR from "swr";
-import PostCard from "../../components/PostCard";
-import { Fragment } from "react";
 import Image from 'next/image';
 
+import classNames from "classnames";
+import useSWR from "swr";
+
+import PostCard from "../../components/PostCard";
+
 import { Group } from '../../types';
+import { useAuthState } from "../../global_context/auth";
 
 export default function GroupPage() {
-  const router = useRouter();
+  const [owner, setOwner] = useState(false);
 
+  //Global Auth State
+  const { auth, user } = useAuthState();
+  
+  const router = useRouter();
+  const fileInputRef = createRef<HTMLInputElement>();
+  
   const groupName = router.query.group;
 
   const { data: group, error } = useSWR<Group>(groupName ? `groups/${groupName}` : null)
 
+  useEffect(() => {
+    if(!group) {
+      return setOwner( auth && user.username === group.username );
+    }
+  }, [group])
+  
+  const openFileInput = (type: string) => {
+    if(!owner) 
+      return fileInputRef.current.name = type;
+      fileInputRef.current.click();
+    
+  }
+
   if (error) {
     router.push('/');
   }
+  
   let postsMarkup
+  
   if(!group) {
     postsMarkup = <p className="text-lg text-center">Loading...</p>
   } 
@@ -35,8 +60,13 @@ export default function GroupPage() {
       </Head>
         {group && (
           <Fragment>
+            <input type="file" hidden={true} ref={fileInputRef} />
+            
             <div>
-              <div className="bg-blue-500">
+              <div 
+                className={classNames("bg-blue-500", { 'cursor-pointer': owner })}
+                onClick={() => openFileInput('banner')}
+              >
                 {group.bannerUrl ? (
                   <div className="h-56 bg-blur-500" style={{
                     backgroundImage: `url(${group.bannerUrl})`,
@@ -50,13 +80,26 @@ export default function GroupPage() {
               </div>
               <div className="h-20 bg-white">
                 <div className="container flex">
-                  <Image 
-                    src={group.imageUrl}
-                    alt="Group"
-                    width={100}
-                    height={100}
-                    className="rounded-full"
-                  />
+                  <div className="absolute" style={{ top: -15 }}>
+                    <Image 
+                      src={group.imageUrl}
+                      alt="Group"
+                      onClick={() => openFileInput('image')}
+                      width={100}
+                      height={100}
+                      className={classNames("bg-blue-500", { 'cursor-pointer': owner })}
+                    />
+                  </div>
+                  <div className="pt-2 pl-24">
+                    <div className="flex items-center">
+                      <h1 className="mb-1 text-2xl font-bold">
+                        {group.title}
+                      </h1> 
+                    </div>
+                    <p className="text-sm font-bold text-gray-500">
+                      {group.name}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
