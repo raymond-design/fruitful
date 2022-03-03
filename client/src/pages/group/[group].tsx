@@ -24,7 +24,7 @@ export default function GroupPage() {
   
   const groupName = router.query.group;
 
-  const { data: group, error, revalidate  } = useSWR<Group>(groupName ? `/groups/${groupName}` : null)
+  const { data: group, error, } = useSWR<Group>(groupName ? `/groups/${groupName}` : null)
 
   useEffect(() => {
     if(!group) {
@@ -38,7 +38,7 @@ export default function GroupPage() {
       fileInputRef.current.click();
   }
 
-  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = async (event: any) => {
     const file = event.target.files[0];
 
     if(!file) return;
@@ -53,7 +53,7 @@ export default function GroupPage() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      revalidate();
+      //revalidate();
       
     } catch (error) {
       console.log(error);
@@ -103,14 +103,14 @@ export default function GroupPage() {
               <div className="h-20 bg-white">
                 <div className="container flex">
                   <div className="absolute" style={{ top: -15 }}>
-                    <Image 
+                    {/*<Image 
                       src={group.imageUrl}
                       alt="Group"
                       onClick={() => openFileInput('image')}
                       width={100}
                       height={100}
                       className={classNames("bg-blue-500", { 'cursor-pointer': owner })}
-                    />
+                    />*/}
                   </div>
                   <div className="pt-2 pl-24">
                     <div className="flex items-center">
