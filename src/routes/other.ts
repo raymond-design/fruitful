@@ -76,7 +76,7 @@ const vote = async (req: Request, res: Response) => {
  * @returns Array of groups in the way that the frontend expects it
  */
 const topGroups = async (_: Request, res: Response) => {
-  const imageUrl = `COALESCE('${process.env.BASE_URL}/images/' || s."imageUrn", 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;  
+  const imageUrl = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn", 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;  
   try {
     const groups = await getConnection()
       .createQueryBuilder()

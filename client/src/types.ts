@@ -16,22 +16,22 @@ export interface Post {
 }
 
 export interface User {
-  username: String
-  email: String
-  createdAt: String
-  updatedAt: String
+  username: string
+  email: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Group {
-  createdAt: String
-  updatedAt: String
-  name: String
-  title: String
-  description: String
-  imageUrn: String
-  bannerUrn: String
-  username: String
+  createdAt: string
+  updatedAt: string
+  name: string
+  title: string
+  description: string
+  imageUrn: string
+  bannerUrn: string
+  username: string
   posts: Post[]
-  imageUrl: String
-  bannerUrl: String
+  imageUrl: string
+  bannerUrl: string
 }
