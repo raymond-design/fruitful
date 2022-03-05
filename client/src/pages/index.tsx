@@ -1,15 +1,14 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment } from 'react'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import Axios from 'axios';
 import useSWR from 'swr';
 
 
 import styles from '../styles/Home.module.css'
-import { Post } from '../types'
 import { Group } from '../types'
 
 import PostCard from '../components/PostCard'
@@ -47,6 +46,23 @@ export default function Home() {
             <div>
               {topGroups?.map((group: Group) => (
                 <div key={group.name} className="flex items-center py-2 border border-b">
+                  <div className="mr-2 overflow-hidden rounded-full cursor-pointer">
+                  <Link href={`Team: {group.name}`}>
+                    <Image
+                      src={group.imageUrl}
+                      alt={group.name}
+                      width={100}
+                      height={100}
+                    />
+                  </Link>
+
+                  </div>
+                  <Link href={`Team: {group.name}`}>
+                      <a className="font-bold hover:cursor-pointer">
+                        {group.name}
+                      </a>
+                    </Link>
+                    <p className="ml-auto font-med">{group.count}</p>
                 </div>
               ))}
             </div>

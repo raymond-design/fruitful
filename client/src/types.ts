@@ -34,4 +34,5 @@ export interface Group {
   posts: Post[]
   imageUrl: string
   bannerUrl: string
+  count?: number
 }
