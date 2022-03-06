@@ -18,7 +18,7 @@ dayjs.extend(relativeTime);
  
 export default function Home() {
   const {data: posts} = useSWR('/posts')
-  const {data: topGroups} = useSWR('/groups/top')
+  const {data: topGroups} = useSWR('/other/top-groups')
   
   return (
     <Fragment>

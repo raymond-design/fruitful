@@ -8,6 +8,7 @@ import classNames from "classnames";
 import useSWR from "swr";
 import Axios from "axios";
 
+import Sidebar from "../../components/sidebar";
 import PostCard from "../../components/PostCard";
 
 import { Group } from '../../types';
@@ -129,6 +130,7 @@ export default function GroupPage() {
               <div className="w-160">
                 {postsMarkup}
               </div>
+              <Sidebar/>
             </div>
           </Fragment>
         )}
