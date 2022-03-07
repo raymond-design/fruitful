@@ -6,6 +6,7 @@ import classNames from 'classnames'
 
 import {Post} from '../types'
 import Axios from 'axios'
+import { doesNotReject } from 'assert'
 interface PostCardProps {
   post: Post
 }
@@ -32,7 +33,7 @@ export default function PostCard({post: {
   username
 }}: PostCardProps) {
 
-  const vote =async (value) => {
+  const vote =async (value: number) => {
     try {
       const res = await Axios.post("/other/vote", {
         identifier,

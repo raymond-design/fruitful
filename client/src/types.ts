@@ -7,6 +7,7 @@ export interface Post {
   createdAt: string
   updatedAt: string
   username: string
+  groupItem?: Group
   //virtual
   url: string
   //optional
