@@ -37,3 +37,13 @@ export interface Group {
   bannerUrl: string
   count?: number
 }
+
+export interface Comment {
+  createdAt: string
+  updatedAt: string
+  identifier: string
+  body: string
+  username: string
+  userVote: number
+  voteScore: number
+}
