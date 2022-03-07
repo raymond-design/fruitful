@@ -4,6 +4,8 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
 
+import ActionButton from './ActionButton'
+
 import {Post} from '../types'
 import Axios from 'axios'
 import { doesNotReject } from 'assert'
@@ -13,12 +15,6 @@ interface PostCardProps {
 
 dayjs.extend(relativeTime)
 
-const ActionButton = ({ children }) => {
-  return <div className="px-1 mr-2 text-xs text-gray-500 rounded cursor-pointer hover:bg-gray-200">
-      {children}
-    </div>
-
-}
 export default function PostCard({post: {
   identifier,
   slug,
@@ -64,20 +60,19 @@ export default function PostCard({post: {
               <div className="w-full p-2">
                 <div className="flex items-center">
                   <Link href={`/group/${group}`}>
-                      <img src="http://www.gravatar.com/avatar" className="w-6 h-6 mr-1 rounded-full cursor-pointer" />
-                    
+                      <img src="http://www.gravatar.com/avatar" className="w-6 h-6 mr-1 rounded-full cursor-pointer" />             
                   </Link>
                   <p className="text-xs text-gray-500">
-            Posted by
-            <Link href={`/${username}`}>
-              <a className="mx-1 hover:underline">/{username}</a>
-            </Link>
-            <Link href={url}>
-              <a className="mx-1 hover:underline">
-                {dayjs(createdAt).fromNow()}
-              </a>
-            </Link>
-          </p>
+                    Posted by
+                  <Link href={`/${username}`}>
+                    <a className="mx-1 hover:underline">/{username}</a>
+                  </Link>
+                  <Link href={url}>
+                  <a className="mx-1 hover:underline">
+                    {dayjs(createdAt).fromNow()}
+                  </a>
+                  </Link>
+                 </p>
                 </div>
                 <Link href={url}><a className="my-1 text-lg font-medium">{title}</a></Link>
                 {body && <p className="my-1 text-sm">{body}</p>}
