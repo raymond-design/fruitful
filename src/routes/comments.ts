@@ -30,8 +30,30 @@ const addComment = async (req: Request, res: Response) => {
   }
 }
 
+const getPostComments = async (req: Request, res: Response) => {
+  const { identifier, slug } = req.params
+  try {
+    const post = await Post.findOneOrFail({ identifier, slug })
+    const comments = await Comment.find({
+      where: { post },
+      order: { createdAt: 'DESC' },
+      relations: ['votes']
+    })
+
+    if(res.locals.user) {
+      comments.forEach(c => c.setUserVote(res.locals.user))
+    }
+    
+    return res.json(comments)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ error: "Internal Server Error"})
+  }
+}
+
 const router = Router();
 
 router.post('/:identifier/:slug/comments', status, auth, addComment);
+router.get('/:identifier/:slug/comments', status, getPostComments);
 
 export default router;
