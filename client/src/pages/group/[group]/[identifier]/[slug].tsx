@@ -32,7 +32,7 @@ export default function PostPage() {
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   )
 
-  const { data: comments, revalidate } = useSWR<Comment[]>(
+  const { data: comments } = useSWR<Comment[]>(
     identifier && slug ? `/comments/${identifier}/${slug}/comments` : null
   )
 
@@ -57,7 +57,7 @@ export default function PostPage() {
         value,
       })
 
-      revalidate()
+      //revalidate()
     } catch (err) {
       console.log(err)
     }
@@ -74,7 +74,7 @@ export default function PostPage() {
 
       setNewComment('')
 
-      revalidate()
+      //revalidate()
     } catch (err) {
       console.log(err)
     }
