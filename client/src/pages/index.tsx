@@ -27,6 +27,7 @@ export default function Home() {
       </Head>
       <div className="container flex pt-4">
         <h1>
+          Recent Posts
         </h1>
         {/*Feed*/}
         

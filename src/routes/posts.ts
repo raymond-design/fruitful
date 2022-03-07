@@ -35,8 +35,9 @@ const getPosts = async (_: Request, res: Response) => {
       order: { createdAt: 'DESC' },
       /**
        * the following line is breaking code, Feb 18
+       * fixed on mar 7
        */
-      //relations: ['comments', 'votes', 'group'],
+      relations: ['comments', 'votes', 'group'],
     });
 
     if(res.locals.user) {

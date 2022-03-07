@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
+@layer components {
   .button {
-    @apply inline-block text-xs font-bold text-center uppercase border;
+    @apply inline-block text-xs font-bold text-center uppercase border rounded;
   }
   .button.blue {
-    @apply text-white bg-gray-300 border-gray-300;
+    @apply text-white bg-blue-500 border-blue-500 hover:bg-blue-300 hover:border-blue-300 disabled:bg-blue-300 disabled:border-blue-300;
   }
   .button.blue.hollow {
-    @apply text-gray-400 bg-transparent border-gray-400;
+    @apply text-blue-500 bg-transparent border-blue-500;
   }
 }

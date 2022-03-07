@@ -49,7 +49,7 @@ export default class Post extends Entity{
     votes: Vote[]
 
     @Expose() get url(): string {
-        return `/${this.group}/${this.identifier}/${this.slug}`
+        return `/group/${this.group}/${this.identifier}/${this.slug}`
     }
 
     @Expose() get CommentCount(): number {
