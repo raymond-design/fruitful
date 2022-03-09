@@ -91,11 +91,11 @@ export default function PostPage() {
           <div className="container flex">
             {post && (
               <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
-                <Image
+                {/*<Image
                   src={post.groupItem.imageUrl}
                   height={(8 * 16) / 4}
                   width={(8 * 16) / 4}
-                />
+            />*/}
               </div>
             )}
             <p className="text-xl font-semibold text-white">/group/{group}</p>
