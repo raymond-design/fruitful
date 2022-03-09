@@ -4,7 +4,7 @@ module.exports = {
   content: [],
   theme: {
     fontFamily: {
-      body: ['IBM Plex Sans']
+      body: ['work sans', 'sans-serif'],
     },
     extend: {
       colors: {
