@@ -21,7 +21,7 @@ const fetcher = async (url: string) => {
 }
 function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter(); 
-  const authRoutes = ['/register', '/login'];
+  const authRoutes = ['/register', '/login', '/privacy'];
 
   const authRoute = authRoutes.includes(pathname);
 

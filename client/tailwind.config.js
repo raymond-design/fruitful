@@ -4,7 +4,7 @@ module.exports = {
   content: [],
   theme: {
     fontFamily: {
-      body: ['work sans', 'sans-serif'],
+      body: ['Nanum Gothic', 'sans-serif'],
     },
     extend: {
       colors: {

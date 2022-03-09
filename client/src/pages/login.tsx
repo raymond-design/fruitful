@@ -51,7 +51,7 @@ export default function Register() {
   }
   
   return (
-    <div className="flex items-center justify-center px-4 py-12 bg-white sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <Head>
         <title>Login - Fruitful</title>
       </Head>
@@ -67,26 +67,15 @@ export default function Register() {
           <div className="flex flex-col items-center justify-center">
             <div>
               <Image
-                src="/images/apple.png"
+                src="/images/fruitfullogo.png"
                 alt="Fruitful"
-                width={48}
-                height={55}
-              />
-              <Image
-                src="/images/apple.png"
-                alt="Fruitful"
-                width={35}
-                height={42}
-              />
-              <Image
-                src="/images/apple.png"
-                alt="Fruitful"
-                width={30}
-                height={35}
+                width={100}
+                height={100}
               />
             </div>
           </div>
-          <h1 className="mt-2 mb-3 text-3xl font-extrabold text-center text-gray-900">Login In to Fruitful</h1>
+          <h1 className="text-3xl font-extrabold text-center text-gray-900">Fruitful!</h1>
+          <h1 className="mt-4 text-lg font-medium text-center">Login to your account</h1>
           <form onSubmit={submitForm}>
             <InputGroup
               className="mt-4 mb-3"
@@ -97,7 +86,7 @@ export default function Register() {
               error={errors.username}
             />
             <InputGroup
-              className="mb-4"
+              className="mb-3"
               type="password"
               value={password}
               setValue={setPassword}
@@ -105,14 +94,14 @@ export default function Register() {
               error={errors.password}
             />
 
-            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-green-500 border border-green-600 rounded hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border border-blue-300 rounded hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
               Let's Go!
             </button>
           </form>
           <small>
             No Account?
             <Link href="/register">
-              <a className="ml-1 text-center text-green-600 hover:text-green-400">Sign Up Here!</a>
+              <a className="ml-1 text-center text-blue-500 hover:text-purple-400">Sign Up Here!</a>
             </Link>
           </small>
         </div>
