@@ -1,5 +1,6 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FormEvent, useState } from 'react';
 import Axios, {AxiosError} from 'axios';
 import { useRouter } from 'next/router';
@@ -50,27 +51,49 @@ export default function Register() {
   }
   
   return (
-    <div className="flex bg-white">
+    <div className="flex items-center justify-center px-4 py-12 bg-white sm:px-6 lg:px-8">
       <Head>
-        <title>Login</title>
+        <title>Login - Fruitful</title>
       </Head>
 
-      <div
+      {/*<div
         className="h-screen bg-center bg-cover w-36"
         style={{
           backgroundImage: `url('/images/fruit.png')`,
         }}
-      ></div>
+      ></div>*/}
       <div className="flex flex-col justify-center pl-6">
         <div className="w-70">
-          <h1 className="mb-2 text-lg font-medium">Login</h1>
+          <div className="flex flex-col items-center justify-center">
+            <div>
+              <Image
+                src="/images/apple.png"
+                alt="Fruitful"
+                width={48}
+                height={55}
+              />
+              <Image
+                src="/images/apple.png"
+                alt="Fruitful"
+                width={35}
+                height={42}
+              />
+              <Image
+                src="/images/apple.png"
+                alt="Fruitful"
+                width={30}
+                height={35}
+              />
+            </div>
+          </div>
+          <h1 className="mt-2 mb-3 text-3xl font-extrabold text-center text-gray-900">Login In to Fruitful</h1>
           <form onSubmit={submitForm}>
             <InputGroup
-              className="mb-2"
+              className="mt-4 mb-3"
               type="text"
               value={username}
               setValue={setUsername}
-              placeholder="USERNAME"
+              placeholder="Fruit-sername"
               error={errors.username}
             />
             <InputGroup
@@ -78,18 +101,18 @@ export default function Register() {
               type="password"
               value={password}
               setValue={setPassword}
-              placeholder="PASSWORD"
+              placeholder="Password"
               error={errors.password}
             />
 
-            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border border-blue-500 rounded">
-              Login
+            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-green-500 border border-green-600 rounded hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              Let's Go!
             </button>
           </form>
           <small>
-            Sign Up Here
+            No Account?
             <Link href="/register">
-              <a className="ml-1 text-blue-500 uppercase">Sign Up!</a>
+              <a className="ml-1 text-center text-green-600 hover:text-green-400">Sign Up Here!</a>
             </Link>
           </small>
         </div>
