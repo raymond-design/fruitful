@@ -56,12 +56,13 @@ export default function Register() {
   }
   
   return (
-    <div className="flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="max-w-md space-y-8 w-70 outline-style:solid">
       <Head>
         <title>Register - Fruitful</title>
       </Head>
 
-      <div className="flex flex-col justify-center pl-6">
+      <div className="flex flex-col justify-center">
         <div className="flex flex-col items-center justify-center">
             <div>
               <Image
@@ -134,6 +135,7 @@ export default function Register() {
             </Link>
           </small>
         </div>
+      </div>
       </div>
     </div>
   );
