@@ -38,14 +38,15 @@ export default function Home() {
           ))}
         </div>
         <div className="nl-6 w-80">
-          <div className="bg-white rounded">
+          <div className="rounded bg-blue50">
             <div className="p-4 border-b-2">
-              <p className="text-lg font-semibold text-center">
-                Other Groups
+              <p className="text-lg font-semibold text-center text-blue-100 bg-blue-400 rounded hover:text-white outline-full outline-blue-300">
+                Leaderboard - {new Date().toLocaleDateString()}
               </p>
             </div>
             <div>
-              {topGroups?.map((group: Group) => (
+              {(topGroups? 
+                topGroups?.map((group: Group) => (
                 <div key={group.name} className="flex items-center py-2 border border-b">
                   <div className="mr-2 overflow-hidden rounded-full cursor-pointer">
                   <Link href={`Team: {group.name}`}>
@@ -62,10 +63,10 @@ export default function Home() {
                       <a className="font-bold hover:cursor-pointer">
                         {group.name}
                       </a>
-                    </Link>
+                  </Link>
                     <p className="ml-auto font-med">{group.count}</p>
                 </div>
-              ))}
+              )) : <p className="text-center text-blue-500 hover:text-white ">Error Loading!</p> )}
             </div>
           </div>
         </div>
