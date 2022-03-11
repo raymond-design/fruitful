@@ -40,7 +40,7 @@ export default function Home() {
         <div className="nl-6 w-80">
           <div className="rounded bg-blue50">
             <div className="p-4 border-b-2">
-              <p className="text-lg font-semibold text-center text-blue-100 bg-blue-400 rounded hover:text-white outline-full outline-blue-300">
+              <p className="text-lg font-semibold text-center text-blue-100 transition duration-300 bg-blue-400 rounded cursor-pointer hover:text-white hover:bg-blue-400">
                 Leaderboard - {new Date().toLocaleDateString()}
               </p>
             </div>
@@ -66,7 +66,7 @@ export default function Home() {
                   </Link>
                     <p className="ml-auto font-med">{group.count}</p>
                 </div>
-              )) : <p className="text-center text-blue-500 hover:text-white ">Error Loading!</p> )}
+              )) : <p className="text-center text-blue-500 hover:text-gray-800 ">Error Loading!</p> )}
             </div>
           </div>
         </div>

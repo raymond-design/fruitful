@@ -98,7 +98,7 @@ export default function PostPage() {
             />*/}
               </div>
             )}
-            <p className="text-xl font-semibold text-white">/group/{group}</p>
+            <p className="text-xl font-semibold text-white">{group}</p>
           </div>
         </div>
       </a>
@@ -279,7 +279,7 @@ export default function PostPage() {
         </div>
       </div>
       {/* Sidebar */}
-      {post && <Sidebar />}
+      {post && <Sidebar group={group}/>}
     </div>
   </>
   )

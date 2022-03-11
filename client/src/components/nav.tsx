@@ -23,8 +23,8 @@ const nav: React.FC = () => {
               <Logo className="w-8 h-8 mr-2" />
             </a>
           </Link>
-          <span className="text-2xl font-extrabold text-center text-blue-100 hover:text-white">
-            <Link href="/">fruitful</Link>
+          <span className="text-2xl font-extrabold text-center text-blue-100 transition duration-300 hover:text-white">
+            <Link href="/">fruitful!</Link>
           </span>
         </div>
 
@@ -43,12 +43,12 @@ const nav: React.FC = () => {
           ) : (
             <Fragment>
               <Link href="/login">
-                <a className="flex items-center justify-center px-6 py-1 mr-5 text-sm font-medium text-gray-900 transition duration-300 bg-blue-200 border rounded-md shadow-sm w-30 hollow hover:bg-blue-400 hover:text-white">
+                <a className="flex items-center justify-center px-6 py-1 mr-5 text-sm font-medium text-gray-800 transition duration-300 bg-blue-100 rounded-md shadow-sm w-30 outline outline-gray-800 hover:bg-blue-400 hover:text-white hover:outline-white">
                   Log In
                 </a>
               </Link>
               <Link href="/register">
-                <a className="flex items-center justify-center px-6 py-1 text-sm font-medium text-gray-900 transition duration-300 bg-blue-200 border rounded-md shadow-sm hover:bg-blue-400 hover:text-white">
+                <a className="flex items-center justify-center px-6 py-1 text-sm font-medium text-gray-800 transition duration-300 bg-blue-100 rounded-md shadow-sm outline outline-gray-800 hover:bg-blue-400 hover:text-white hover:outline-white">
                 Sign Up
                 </a>
             </Link>

@@ -66,9 +66,9 @@ export default function Register() {
         <div className="flex flex-col items-center justify-center">
             <div>
               <Image
-                src="/images/fruitfullogo.png"
+                src="/images/fruitfullogotwo.png"
                 alt="Fruitful"
-                width={100}
+                width={180}
                 height={100}
               />
             </div>
