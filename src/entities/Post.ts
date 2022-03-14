@@ -26,6 +26,9 @@ export default class Post extends Entity{
     @Column()
     slug: string
 
+    @Column()
+    groupName: string
+
     @Column({ nullable: true, type: 'text'})
     body: string
 
@@ -49,7 +52,7 @@ export default class Post extends Entity{
     votes: Vote[]
 
     @Expose() get url(): string {
-        return `/group/${this.group}/${this.identifier}/${this.slug}`
+        return `/group/${this.groupName}/${this.identifier}/${this.slug}`
     }
 
     @Expose() get CommentCount(): number {

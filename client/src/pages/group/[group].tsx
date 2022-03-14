@@ -130,7 +130,7 @@ export default function GroupPage() {
               <div className="w-160">
                 {postsMarkup}
               </div>
-              <Sidebar/>
+              <Sidebar group={group}/>
             </div>
           </Fragment>
         )}

@@ -98,7 +98,7 @@ export default function PostPage() {
             />*/}
               </div>
             )}
-            <p className="text-xl font-semibold text-white">{group}</p>
+            <p className="text-xl font-semibold text-white">"Welcome to: "{group}</p>
           </div>
         </div>
       </a>
