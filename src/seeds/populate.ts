@@ -1,3 +1,4 @@
+/**
 import { Seeder } from 'typeorm-seeding'
 import { Connection } from 'typeorm'
 import bcrypt from 'bcrypt'
@@ -404,3 +405,4 @@ export default class CreateData implements Seeder {
       .execute()
   }
 }
+*/
