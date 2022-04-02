@@ -26,6 +26,11 @@ export default function PostPage() {
 
   
   const router = useRouter()
+
+  if(router.isFallback) {
+    return <div>Loading...</div>
+  }
+  
   const { identifier, group, slug } = router.query
 
   const { data: post, error } = useSWR<Post>(
@@ -81,7 +86,7 @@ export default function PostPage() {
   }
 
   return (
-    <>
+  <>
     <Head>
       <title>{post?.title}</title>
     </Head>
@@ -89,15 +94,15 @@ export default function PostPage() {
       <a>
         <div className="flex items-center w-full h-20 p-8 bg-blue-500">
           <div className="container flex">
-            {post && (
+            {/* {post && (
               <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
-                {/*<Image
+                <Image
                   src={post.groupItem.imageUrl}
                   height={(8 * 16) / 4}
                   width={(8 * 16) / 4}
-            />*/}
-              </div>
-            )}
+                />
+               </div>
+            )} */}
             <p className="text-xl font-semibold text-white">"Welcome to: "{group}</p>
           </div>
         </div>
@@ -225,7 +230,7 @@ export default function PostPage() {
                   </div>
                 )}
               </div>
-              <hr />
+              {/* <hr /> */}
               {/* Comments feed */}
               {comments?.map((comment) => (
                 <div className="flex" key={comment.identifier}>

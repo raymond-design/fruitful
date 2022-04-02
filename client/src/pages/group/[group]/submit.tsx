@@ -10,6 +10,11 @@ export default function submit() {
   const [body, setBody] = useState("");
   
   const router = useRouter();
+
+  if(router.isFallback) {
+    return <div>Loading...</div>
+  }
+  
   const {group: groupName} = router.query;
   const { data: group, error } = useSWR(groupName ? `/groups/${groupName}` : null);
 

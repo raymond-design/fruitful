@@ -8,11 +8,10 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import useSWR from 'swr';
 
 
-import styles from '../styles/Home.module.css'
 import { Group } from '../types'
 
 import PostCard from '../components/PostCard'
-import { GetServerSideProps } from 'next'
+//import { GetServerSideProps } from 'next'
 
 dayjs.extend(relativeTime);
  
