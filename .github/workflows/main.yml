@@ -12,7 +12,8 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: |
-            cd fruitfulapp.com
+            cd .ssh
+            cd fruitful.com
             git pull
             npm install
             npx tsc
